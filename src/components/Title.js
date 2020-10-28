@@ -1,13 +1,11 @@
 import React from "react";
-const Banner = ({children, title, subtitle}) => {
+const Title = ({title}) => {
     return(
-        <div className="banner">
-            <h1>{title}</h1>
+        <div className="section-title">
+            <h4>{title}</h4>
             <div />
-            <p>{subtitle}</p>
-            {children}
         </div>
     );
 };
 
-export default Banner;
+export default Title;
