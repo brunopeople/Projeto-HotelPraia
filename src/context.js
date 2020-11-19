@@ -71,7 +71,7 @@ export default class RoomProvider extends Component{
              }
              getRoom = slug => {
                 let tempRooms = [...this.state.rooms];
-                const room = tempoRooms.find(room => room.slug === slug);
+                const room = tempRooms.find(room => room.slug === slug);
                 return room;
             };
     
@@ -101,43 +101,43 @@ export default class RoomProvider extends Component{
                     pets,
                 } = this.state;
     
-                let tempoRooms = [...rooms];
+                let tempRooms = [...rooms];
     
                 //transformar os valores 
                 // pega os capacity
-                capacity = parsetInt(capacity);
+                capacity = parseInt(capacity);
                 price = parseInt(price);
     
                 //filtrado pelo tipo, filtrar os quartos pelo tipo
                 if(type !== "all"){
-                    tempoRooms = tempoRooms.filter(room => room.type === type);
+                    tempRooms = tempRooms.filter(room => room.type === type);
                 }
     
                 //filtrar pelo capacity, irá filtrar os Quartos com maior capacidade 
                 if(capacity !== 1){
-                    tempoRooms = tempoRooms.filter(room => room.capacity >= capacity);
+                    tempRooms = tempRooms.filter(room => room.capacity >= capacity);
                 }
     
                 // filtrar os quartos pelo preço 
-                tempoRooms = tempoRooms.filter(room => room.price <= price);
+                tempRooms = tempRooms.filter(room => room.price <= price);
     
                 //filtrar pelo quartos pelo tamanho
-                tempoRooms = tempoRooms.filter( room => room.size >= minSize && room.size <= maxSize);
+                tempRooms = tempRooms.filter( room => room.size >= minSize && room.size <= maxSize);
     
                 //filtrar os cafés da manhã
     
                 if(breakfast){
-                    tempoRooms = tempoRooms.filter(room => room.breakfast === true);
+                    tempRooms = tempRooms.filter(room => room.breakfast === true);
                 }
     
                 //filtrar quartos que oferecem vaga para pets
     
                 if(pets){
-                    tempoRooms = tempoRooms.filter(room => room.pets === true);
+                    tempRooms = tempRooms.filter(room => room.pets === true);
                 }
     
                 this.setState({
-                    sortedRooms: tempoRooms
+                    sortedRooms: tempRooms
                 });
             };
     
