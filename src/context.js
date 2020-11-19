@@ -69,106 +69,105 @@ export default class RoomProvider extends Component{
                 });
                 return tempItems;
              }
-        }
-
-        getRoom = slug => {
-            let tempRooms = [...this.state.rooms];
-            const room = tempoRooms.find(room => room.slug === slug);
-            return room;
-        };
-
-        handleChange = event =>{
-            const target = event.target;
-            const value = target.type === "checkbox" ? target.checked : target.value;
-            const name = target.name;
-            console.log(name, value);
-
-            this.setState(
-                {
-                    [name]: value
-                },
-                this.filterRooms
-            );
-        };
-
-        filterRooms = () => {
-            let{
-                rooms,
-                type,
-                capacity,
-                price,
-                minSize,
-                maxSize,
-                breakfast,
-                pets,
-            } = this.state;
-
-            let tempoRooms = [...rooms];
-
-            //transformar os valores 
-            // pega os capacity
-            capacity = parsetInt(capacity);
-            price = parseInt(price);
-
-            //filtrado pelo tipo, filtrar os quartos pelo tipo
-            if(type !== "all"){
-                tempoRooms = tempoRooms.filter(room => room.type === type);
-            }
-
-            //filtrar pelo capacity, irá filtrar os Quartos com maior capacidade 
-            if(capacity !== 1){
-                tempoRooms = tempoRooms.filter(room => room.capacity >= capacity);
-            }
-
-            // filtrar os quartos pelo preço 
-            tempoRooms = tempoRooms.filter(room => room.price <= price);
-
-            //filtrar pelo quartos pelo tamanho
-            tempoRooms = tempoRooms.filter( room => room.size >= minSize && room.size <= maxSize);
-
-            //filtrar os cafés da manhã
-
-            if(breakfast){
-                tempoRooms = tempoRooms.filter(room => room.breakfast === true);
-            }
-
-            //filtrar quartos que oferecem vaga para pets
-
-            if(pets){
-                tempoRooms = tempoRooms.filter(room => room.pets === true);
-            }
-
-            this.setState({
-                sortedRooms: tempoRooms
-            });
-        };
-
-        render() {
-            return (
-              <RoomContext.Provider
-                value={{
-                  ...this.state,
-                  getRoom: this.getRoom,
-                  handleChange: this.handleChange
-                }}
-              >
-                {this.props.children}
-              </RoomContext.Provider>
-            );
-          }
-        }
-
-        const RoomConsumer = RoomContext.Consumer;
-
-        export {RoomProvider, RoomConsumer, RoomContext};
-
-        export function withRoomConsumer(Component){
-            return function ConsumerWrapper(props){
-                return(
-                    <RoomConsumer>
-                        {value => <Component {...props} context={value} />}
-                    </RoomConsumer>
+             getRoom = slug => {
+                let tempRooms = [...this.state.rooms];
+                const room = tempoRooms.find(room => room.slug === slug);
+                return room;
+            };
+    
+            handleChange = event =>{
+                const target = event.target;
+                const value = target.type === "checkbox" ? target.checked : target.value;
+                const name = target.name;
+                console.log(name, value);
+    
+                this.setState(
+                    {
+                        [name]: value
+                    },
+                    this.filterRooms
                 );
             };
+    
+            filterRooms = () => {
+                let{
+                    rooms,
+                    type,
+                    capacity,
+                    price,
+                    minSize,
+                    maxSize,
+                    breakfast,
+                    pets,
+                } = this.state;
+    
+                let tempoRooms = [...rooms];
+    
+                //transformar os valores 
+                // pega os capacity
+                capacity = parsetInt(capacity);
+                price = parseInt(price);
+    
+                //filtrado pelo tipo, filtrar os quartos pelo tipo
+                if(type !== "all"){
+                    tempoRooms = tempoRooms.filter(room => room.type === type);
+                }
+    
+                //filtrar pelo capacity, irá filtrar os Quartos com maior capacidade 
+                if(capacity !== 1){
+                    tempoRooms = tempoRooms.filter(room => room.capacity >= capacity);
+                }
+    
+                // filtrar os quartos pelo preço 
+                tempoRooms = tempoRooms.filter(room => room.price <= price);
+    
+                //filtrar pelo quartos pelo tamanho
+                tempoRooms = tempoRooms.filter( room => room.size >= minSize && room.size <= maxSize);
+    
+                //filtrar os cafés da manhã
+    
+                if(breakfast){
+                    tempoRooms = tempoRooms.filter(room => room.breakfast === true);
+                }
+    
+                //filtrar quartos que oferecem vaga para pets
+    
+                if(pets){
+                    tempoRooms = tempoRooms.filter(room => room.pets === true);
+                }
+    
+                this.setState({
+                    sortedRooms: tempoRooms
+                });
+            };
+    
+            render() {
+                return (
+                  <RoomContext.Provider
+                    value={{
+                      ...this.state,
+                      getRoom: this.getRoom,
+                      handleChange: this.handleChange
+                    }}
+                  >
+                    {this.props.children}
+                  </RoomContext.Provider>
+                );
+              }
+            }
+    
+            const RoomConsumer = RoomContext.Consumer;
+    
+            export {RoomProvider, RoomConsumer, RoomContext};
+    
+            export function withRoomConsumer(Component){
+                return function ConsumerWrapper(props){
+                    return(
+                        <RoomConsumer>
+                            {value => <Component {...props} context={value} />}
+                        </RoomConsumer>
+                    );
+                };
         }
+
     
